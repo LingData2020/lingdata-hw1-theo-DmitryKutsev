@@ -1,0 +1,235 @@
+
+Problem 1.
+
+What is the proportion of values in the sample that exceed 5? Explain your answer.
+
+Частота значения 10 - 4, значения 15 и 20 - 1. Всего значений получается 6, и распределение будет выглядеть так: 10 10 10 10 15 20.
+Распределение для 10  - 4/6 = 2/3, для 15 и 20 - по 1/6
+
+Indicate the interval where the median of this sample can lie. Explain your answer.
+
+Медиана лежит в промежутке от -5 до 0, там примерно находится середина.
+
+How the histogram will change if we add an element 7 to the sample? Explain your answer.
+
+Появятся столбцы 5-7 и 7-10, и значение может измениться, или остаться прежним в зависимости от частоты в значении 7.
+
+
+
+Problem 2.
+
+
+Look at the histograms of two samples. They illustrate the distribution of normalized average reaction time to frequent words (in ms) in two groups of people.
+
+Дисперсия больше на гистаграмме 1, потому что ее разброс больше.
+
+Which of the samples has a larger variance? Explain your answer.
+
+На глаз примерно кажется, что дисперсия больше на гистаграмме 1.
+
+
+3.1
+Is it true that 50% students made more than 35 mistakes?
+No
+
+Is it true that most students made no more than 10 mistakes?
+Yes
+
+Which of the following values is closer to be the median of mistakes: 10, 20, 30, 40?
+
+20
+
+
+library("readr")
+library("dplyr")
+library("dplyr")
+
+
+Part 3
+
+Problem 5
+5.1
+
+Arrange elements above in a vector and call it words
+
+age <- c(44, 50, 42, 64, 66, 42, 72, 56, 72, 54, 46, 48, 48, 52, 50, 66,  84)
+age
+ [1] 44 50 42 64 66 42 72 56 72 54 46 48 48 52 50 66 84
+
+
+#5.2
+Examine the type of age variable (numeric, character, etc).
+> class(age)
+[1] "numeric"
+
+#5.3
+Calculate the relative frequences of values in words measured in percent.
+hist(age, breaks=5)
+
+
+Problem 4. Exact binomial test
+The null hypothesis is that p=0 (i.e. no success is possible). In a dataset, there is only one success out of 1 000 000 observations. Will you reject the null hypothesis?
+
+Нет, потому что это все-таки больше нуля.
+
+words
+
+
+> #bar chart   pie 
+> #4     1     3 
+> table(words)/sum(table(words))*100  #relative frequences of values in words measured in percent.
+
+words
+
+  bar chart   pie 
+ 50.0  12.5  37.5 
+
+#Problem 6
+#6.1
+Arrange elements above in a vector and call it words
+
+words <- c('pie', 'bar', 'bar', 'pie', 'pie', 'bar', 'bar', 'chart')
+
+#6.2
+
+Calculate the relative frequences of values in words measured in percent.
+table(words)
+
+#bar chart   pie 
+#4     1     3 
+
+table(words)
+table(words)/sum(table(words))*100  #relative frequences of values in words measured in percent.
+
+
+#bar chart   pie 
+#50.0  12.5  37.5
+
+7.1 State hypothesis
+
+Нулевая гипотеза H0: E(x) = 0,17
+Альтернативная гипотеза H1: среднее количество глаголов 
+
+
+my_poetry = read_delim("https://raw.githubusercontent.com/LingData2019/LingData2020/master/data/poetry_last_in_lines.csv", delim="\t")
+#subset(my_poetry, Decade=='1920s',)
+verbs <- subset(my_poetry, Decade=='1920s' & UPoS=='VERB') #observations from 1920s
+verbs 
+nrow(verbs) #number of verbs observed in the sample
+size(verbs)
+
+
+
+
+#Part 3
+#Problem 5
+#5.1
+age <- c(44, 50, 42, 64, 66, 42, 72, 56, 72, 54, 46, 48, 48, 52, 50, 66,  84)
+age
+#5.2
+class(age)
+#5.3
+hist(age, breaks=5)
+
+
+#Problem 6
+#6.1
+words <- c('pie', 'bar', 'bar', 'pie', 'pie', 'bar', 'bar', 'chart')
+#6.2
+table(words)
+#bar chart   pie 
+#4     1     3 
+table(words)/sum(table(words))*100  #relative frequences of values in words measured in percent.
+
+#bar chart   pie 
+#50.0  12.5  37.5
+
+#7.1 State hypothesis
+#What is your null hypothesis H0 and what is the alternative hypothesis H1?
+  
+#  H0: E(x) = 0.17
+#  H1: E(x) > 0.17
+
+#7.2
+#Read the dataset “The last words in verses”. Filter out the relevant observations from 1920s, calculate the number of verbs observed in the sample, and the sample size.
+my_poetry = read_delim("https://raw.githubusercontent.com/LingData2019/LingData2020/master/data/poetry_last_in_lines.csv", delim="\t")
+
+
+#7.1 State hypothesis
+
+#subset(my_poetry, Decade=='1920s',)
+verbs <- subset(my_poetry, Decade=='1920s' & UPoS=='VERB') #observations from 1920s
+years <- subset(my_poetry, Decade=='1920s') #observations from 1920s
+verbs 
+
+nrow(verbs) #number of verbs observed in the sample
+#[1] 39
+nrow(my_poetry)
+#[1] 364
+nrow(years)
+#[1] 277
+
+
+
+
+#7.3
+#Use an exact binomial test to calculate p-value.
+p_val <- binom.test(39, 277, 0.17)
+p_val
+#Exact binomial test
+
+#data:  39 and 277
+#number of successes = 39, number of trials = 277, p-value = 0.2297
+#alternative hypothesis: true probability of success is not equal to 0.17
+#95 percent confidence interval:
+#  0.1020719 0.1874081
+#sample estimates:
+#  probability of success 
+#0.1407942 
+
+#p-value = 0.2297 > 0.05, а это значит, что мы не отвергаем нулевую гипетезу, но это меньше 0,17 и значит мы встречаем глагол с меньшей
+#вероятностью, чем предполагалось
+
+
+#Problem 8. One-sample t-test
+#t.test(sample, mu = 7725) # mu is a population mean
+
+#8.1
+#Write down a two-tailed alternative hypothesis.
+
+#H1: E(x) != mu (больше или меньше)
+
+my_islandic = read.csv("https://raw.githubusercontent.com/LingData2019/LingData2020/master/data/icelandic.csv", sep=',')
+
+
+#8.2
+#Perform a one-sample t-test.
+
+my_mean <- mean(my_islandic[my_islandic$speaker == 'shg05',]$vowel.dur)
+my_t_test <- t.test(my_islandic[my_islandic$speaker == 'shg05',]$vowel.dur, mu=73)
+my_mean 
+my_t_test 
+
+#> my_mean 
+#[1] 70.10502
+#> my_t_test 
+
+
+
+#One Sample t-test
+
+#data:  my_islandic[my_islandic$speaker == "shg05", ]$vowel.dur
+#t = -1.9602, df = 159, p-value = 0.05172
+#alternative hypothesis: true mean is not equal to 73
+#95 percent confidence interval:
+#  67.18817 73.02188
+#sample estimates:
+#  mean of x 
+#70.10502 
+
+#8.3
+#Interpret results.
+
+#p-value = 0.05172 > 0.05, а это значит, что мы не отвергаем нулевую гипетезу.
+
+
